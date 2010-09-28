@@ -1,0 +1,7 @@
+Vamos testar o número 0::
+
+    >>> from roman import to_roman
+    >>> to_roman(0)
+    ''
+
+

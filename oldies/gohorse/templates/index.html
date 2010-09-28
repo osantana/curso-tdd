@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>GoHorse</title>
+    </head>
+
+    <body>
+{% spaceless %}
+<ul>
+    {% for url in urls %}
+<li>
+    <a href="/remove/{{ url.id }}" class="remove">[X]</a>
+    <a href="{{ url.url }}" class="title">{{ url.title }}</a> - Tags: 
+{% for tag in url.tags.all %}<a href="/tag/{{ tag.name }}" class="tag">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+    {% empty %}
+<li>Nenhuma URL</li>
+    {% endfor %}
+</ul>
+
+<form action="" method="post">
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+</form>
+{% endspaceless %}
+
+    </body>
+</html>
