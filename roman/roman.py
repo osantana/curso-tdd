@@ -7,4 +7,4 @@ def to_roman(decimal):
         return "IV"
     if decimal == 0:
         return ""
-    return "I" + to_roman(decimal - 1)
+    return to_roman(decimal - 1) + "I"
