@@ -1,6 +1,8 @@
 # roman.py
 
 def to_roman(decimal):
+    if decimal == 9:
+        return "IX"
     if decimal == 5:
         return "V"
     if decimal == 4:

@@ -24,4 +24,7 @@ class TestRoman(unittest.TestCase):
     def test_six(self):
         self.assertEquals("VI", to_roman(6))
 
+    def test_nine(self):
+        self.assertEquals("IX", to_roman(9))
+
 
