@@ -14,3 +14,8 @@ class TestRoman(unittest.TestCase):
 
     def test_three(self):
         self.assertEquals("III", to_roman(3))
+
+    def test_four(self):
+        self.assertEquals("IV", to_roman(4))
+
+
