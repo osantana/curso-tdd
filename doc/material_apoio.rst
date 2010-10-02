@@ -66,7 +66,7 @@ Passos para ilustrar::
 3. Testa retorno do 2 -> "II" mas usa "Triangulate" por conta de duas ou mais
    condições de retorno.
 4. Implementa um concatena N vezes o caracter "I"
-5. Refatora ele para uma versão recursiva (opcional)
+5. Refatora ele para uma versão recursiva
 6. Faz um teste para 3 -> III
 7. O teste passará de primeira... pausa, então, para explicar que neste caso
 nós temos um dos seguintes casos:
@@ -99,56 +99,33 @@ falha. Falha porque estamos lidando com um número composto de 2 casos especiais
 XIV é X+IV. Colocamos o I como caso especial e vamos discutir.
 22. Chegaremos à uma solução próxima do código abaixo.
 
-
-
 Problema resolvido::
 
-    #!python
-    class OutOfRangeError(Exception):
-        pass
+    def to_roman(decimal):
+        values = (
+            (1000, "M"),
+            ( 900, "CM"),
+            ( 500, "D"),
+            ( 400, "CD"),
+            ( 100, "C"),
+            (  90, "XC"),
+            (  50, "L"),
+            (  40, "XL"),
+            (  10, "X"),
+            (   9, "IX"),
+            (   5, "V"),
+            (   4, "IV"),
+            (   1, "I"),
+        )
 
+        for d, v in values:
+            if decimal == d:
+                return v
 
-    roman_numeral_map = (
-        ('M', 1000), ('CM', 900),
-        ('D',  500),  ('CD', 400),
-        ('C',  100),  ('XC', 90),
-        ('L',  50),    ('XL', 40),
-        ('X',  10),   ('IX', 9),
-        ('V',  5),     ('IV', 4),
-        ('I',  1))
+            if decimal > d:
+                return to_roman(d) + to_roman(decimal - d)
 
-
-    def to_roman(x):
-        output = ''
-        if x < 1:
-            raise OutOfRangeError
-        for roman, normal in roman_numeral_map:
-            while x - normal >= 0:
-                output += roman
-                x -= normal
-        return output
-
-    # tests.py
-    import unittest
-    import roman_numerals
-
-    class ToRomanKnown(unittest.TestCase):
-        def test_known(self):
-            self.assertEqual(roman_numerals.to_roman(5), "V")
-            self.assertEqual(roman_numerals.to_roman(10), "X")
-            self.assertEqual(roman_numerals.to_roman(15), "XV")
-            self.assertEqual(roman_numerals.to_roman(42), "XLII")
-
-    class ToRomanBadInput(unittest.TestCase):
-        def test_zero(self):
-            self.assertRaises(roman_numerals.OutOfRangeError, roman_numerals.to_roman, 0)
-
-        def test_negative(self):
-            self.assertRaises(roman_numerals.OutOfRangeError, roman_numerals.to_roman, -1)
-
-
-    if __name__ == '__main__':
-        unittest.main()
+        return ""
 
 Características
 ~~~~~~~~~~~~~~~
