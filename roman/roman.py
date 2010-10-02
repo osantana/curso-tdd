@@ -6,8 +6,14 @@ def to_roman(decimal):
          9: "IX",
          5: "V",
          4: "IV",
-         0: "",
+         1: "I",
     }
+
     if decimal in values:
         return values[decimal]
-    return to_roman(decimal - 1) + "I"
+
+    for d in (10, 9, 5, 4, 1):
+        if decimal > d:
+            return to_roman(d) + to_roman(decimal - d)
+
+    return ""

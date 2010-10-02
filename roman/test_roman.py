@@ -30,3 +30,6 @@ class TestRoman(unittest.TestCase):
     def test_ten(self):
         self.assertEquals("X", to_roman(10))
 
+    def test_fourteen(self):
+        self.assertEquals("XIV", to_roman(14))
+
