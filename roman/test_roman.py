@@ -36,3 +36,6 @@ class TestRoman(unittest.TestCase):
     def test_fourty(self):
         self.assertEquals("XL", to_roman(40))
 
+    def test_fourty_four(self):
+        self.assertEquals("XLIV", to_roman(44))
+

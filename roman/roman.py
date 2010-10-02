@@ -13,7 +13,7 @@ def to_roman(decimal):
     if decimal in values:
         return values[decimal]
 
-    for d in (10, 9, 5, 4, 1):
+    for d in (40, 10, 9, 5, 4, 1):
         if decimal > d:
             return to_roman(d) + to_roman(decimal - d)
 
