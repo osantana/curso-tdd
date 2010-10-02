@@ -39,3 +39,23 @@ class TestRoman(unittest.TestCase):
     def test_fourty_four(self):
         self.assertEquals("XLIV", to_roman(44))
 
+    def test_fifty(self):
+        self.assertEquals("L", to_roman(50))
+
+    def test_ninety(self):
+        self.assertEquals("XC", to_roman(90))
+
+    def test_hundred(self):
+        self.assertEquals("C", to_roman(100))
+
+    def test_four_hundred(self):
+        self.assertEquals("CD", to_roman(400))
+
+    def test_five_hundred(self):
+        self.assertEquals("D", to_roman(500))
+
+    def test_nine_hundred(self):
+        self.assertEquals("CM", to_roman(900))
+
+    def test_one_thousand(self):
+        self.assertEquals("M", to_roman(1000))
