@@ -2,6 +2,7 @@
 
 def to_roman(decimal):
     values = {
+        40: "XL",
         10: "X",
          9: "IX",
          5: "V",
