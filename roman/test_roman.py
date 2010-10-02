@@ -59,3 +59,13 @@ class TestRoman(unittest.TestCase):
 
     def test_one_thousand(self):
         self.assertEquals("M", to_roman(1000))
+
+    def test_other_numbers(self):
+        self.assertEquals("XXVII", to_roman(27))
+        self.assertEquals("LXXXIX", to_roman(89))
+        self.assertEquals("CXLV", to_roman(145))
+        self.assertEquals("DCXCI", to_roman(691))
+        self.assertEquals("MCMLXXXIII", to_roman(1983))
+        self.assertEquals("MMCDXII", to_roman(2412))
+        self.assertEquals("MMMCCCIX", to_roman(3309))
+
