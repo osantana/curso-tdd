@@ -132,8 +132,30 @@ Características
 
 TODO
 
-Indices and tables
-==================
+Dependências
+~~~~~~~~~~~~
+
+Pacotes instalados:
+
+* NoseGAE
+* NoseGrowl
+* Pygments
+* WebOb
+* WebTest
+* coverage
+* distribute
+* mocker
+* nose
+* py-Growl
+* rednose
+* selenium
+* tdaemon
+* virtualenv
+* wsgiref
+
+
+Indices e tabelas
+=================
 
 * :ref:`genindex`
 * :ref:`modindex`
