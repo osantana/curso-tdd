@@ -1,0 +1,36 @@
+#!/bin/bash
+
+PROJDIR="$VIRTUAL_ENV/tdd/code-bin"
+SELENIUM_LOG="$PROJDIR/selenium-server.log"
+GAE_LOG="$PROJDIR/gae-server.log"
+SCREENRC="
+screen -t Selenium tail -f ${SELENIUM_LOG}
+split
+focus
+screen -t AppEngine tail -f ${GAE_LOG}
+focus
+"
+TMP_SCREENRC=$(mktemp -t weblogs)
+echo "${SCREENRC}" > "${TMP_SCREENRC}"
+
+function pids() {
+    pid=$(ps x | grep "$1" | grep -v grep | awk '{ print $1 }')
+    echo $pid
+}
+
+java -jar "${PROJDIR}/selenium-server-standalone-2.0a4.jar" >> "${SELENIUM_LOG}" 2>&1 &
+dev_appserver.py "${PROJDIR}" >> "${GAE_LOG}" 2>&1 &
+
+while true; do
+    sleep 1
+    if echo $(tail -1 "${GAE_LOG}") | grep "Running application" > /dev/null; then
+        break
+    fi
+done
+
+screen -S weblogs -c  "${TMP_SCREENRC}"
+
+kill $(pids "java -jar ${PROJDIR}/selenium-server-standalone-2.0a4.jar")
+kill $(pids "dev_appserver.py ${PROJDIR}")
+rm "${TMP_SCREENRC}"
+
