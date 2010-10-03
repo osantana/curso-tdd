@@ -20,11 +20,12 @@ from google.appengine.ext.webapp import util
 
 from codebin import MainHandler
 
+def application():
+    return webapp.WSGIApplication([('/', MainHandler)],
+                                         debug=True)
 
 def main():
-    application = webapp.WSGIApplication([('/', MainHandler)],
-                                         debug=True)
-    util.run_wsgi_app(application)
+    util.run_wsgi_app(application())
 
 
 if __name__ == '__main__':
