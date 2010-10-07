@@ -19,10 +19,13 @@ from google.appengine.ext.webapp import util
 
 
 from codebin import MainHandler
+from codebin import ViewSnippetHandler
 
 def application():
-    return webapp.WSGIApplication([('/', MainHandler)],
-                                         debug=True)
+    return webapp.WSGIApplication([
+            ('/', MainHandler),
+            ('/.*', ViewSnippetHandler)
+        ], debug=True)
 
 def main():
     util.run_wsgi_app(application())

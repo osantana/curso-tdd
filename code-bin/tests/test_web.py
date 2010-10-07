@@ -4,10 +4,13 @@ from webtest import TestApp
 
 from main import application
 
+from codebin import reset_counter
+
 
 class WebTest(unittest.TestCase):
     def setUp(self):
         self.app = TestApp(application())
+        reset_counter()
 
     def test_index(self):
         response = self.app.get('/')
@@ -46,3 +49,12 @@ class WebTest(unittest.TestCase):
 
         self.assertEquals(301, response.status_int)
         self.assertTrue(response.headers['Location'].endswith("/B"))
+
+    def test_submit_a_plain_text_snippet_and_verify_formatting(self):
+        response = self.app.post('/', {
+            'code': "Hello world!",
+            'lang': "plain",
+        })
+        response = response.follow()
+        body = response.html.body
+        self.assertEquals("Hello world!", body.pre.string)
