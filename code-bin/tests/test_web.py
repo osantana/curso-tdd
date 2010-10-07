@@ -24,11 +24,25 @@ class WebTest(unittest.TestCase):
             form_langs.append(opt['value'])
         self.assertEquals(langs, form_langs)
 
-    def test_submit_plaintext(self):
+    def test_submit_one_snippet(self):
         response = self.app.post('/', {
             'code': "Hello world!",
             'lang': "plain",
         })
 
-        pre = response.html.pre
-        self.assertEquals("Hello world!", pre.string)
+        self.assertEquals(301, response.status_int)
+        self.assertTrue(response.headers['Location'].endswith("/A"))
+
+    def test_submit_two_snippets(self):
+        self.app.post('/', {
+            'code': "Hello world! #1",
+            'lang': "plain",
+        })
+
+        response = self.app.post('/', {
+            'code': "Hello world! #2",
+            'lang': "plain",
+        })
+
+        self.assertEquals(301, response.status_int)
+        self.assertTrue(response.headers['Location'].endswith("/B"))
