@@ -24,7 +24,7 @@ from codebin import ViewSnippetHandler
 def application():
     return webapp.WSGIApplication([
             ('/', MainHandler),
-            ('/.*', ViewSnippetHandler)
+            ('/(?P<path>.*)', ViewSnippetHandler)
         ], debug=True)
 
 def main():

@@ -7,6 +7,11 @@ from google.appengine.ext.webapp import template
 from django import newforms as forms
 
 
+import pygments
+import pygments.lexers
+import pygments.formatters
+
+
 LANGS = (
     ('plain', "Plain Text"),
     ('python', "Python"),
@@ -18,6 +23,16 @@ LANGS = (
 class CodeForm(forms.Form):
     code = forms.CharField(widget=forms.Textarea())
     lang = forms.ChoiceField(choices=LANGS)
+
+
+def highlight(code, lang):
+    if lang == 'plain':
+        return code
+
+    lexer = pygments.lexers.get_lexer_by_name(lang)
+    format = pygments.formatters.HtmlFormatter(cssclass="codehilite")
+    res = pygments.highlight(code, lexer, format)
+    return res
 
 
 def short(decimal):
@@ -82,10 +97,16 @@ class MainHandler(webapp.RequestHandler):
         self.redirect(snippet.url, 301)
 
 class ViewSnippetHandler(webapp.RequestHandler):
-    def get(self):
+    def get(self, path):
+        try:
+            snippet = Snippet.all().filter("url =", path)[0]
+        except IndexError:
+            self.response.clear()
+            self.response.set_status(404)
+            self.response.out.write("Unknown Snippet")
+            return
 
-        template_values = {
-            'code': 'Hello world!',
-        }
+        code = highlight(snippet.code, snippet.lang)
+        template_values = {'code': code,}
         path = os.path.join(os.path.dirname(__file__), 'code.html')
         self.response.out.write(template.render(path, template_values))

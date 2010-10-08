@@ -1,9 +1,8 @@
 import unittest
 
-from webtest import TestApp
+from webtest import TestApp, AppError
 
 from main import application
-
 from codebin import reset_counter
 
 
@@ -58,3 +57,16 @@ class WebTest(unittest.TestCase):
         response = response.follow()
         body = response.html.body
         self.assertEquals("Hello world!", body.pre.string)
+
+    def test_getting_an_url_that_does_not_exist(self):
+        self.assertRaises(AppError, self.app.get, '/A')
+
+    def test_submit_a_python_snippet_and_verify_formatting(self):
+        response = self.app.post('/', {
+            'code': 'print "Hello!"',
+            'lang': "python",
+        })
+        response = response.follow()
+        body = response.html.body
+        code = u'<div class="codehilite"><pre><span class="k">print</span> <span class="s">&quot;Hello!&quot;</span>\n</pre></div>\n'
+        self.assertEquals(code, body.string)
