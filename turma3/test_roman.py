@@ -5,6 +5,8 @@ def roman(d):
         raise ValueError("There is no 0 in roman algarisms")
 
     exceptions = (
+        (100, "C"),
+        (50, "L"),
         (40, "XL"),
         (10, "X"),
         (9, "IX"),
@@ -22,14 +24,6 @@ def roman(d):
                 break
     return res
 
-    if d > 40:
-        return roman(40) + roman(d - 40)
-    elif d > 10 and d < 40:
-        return roman(10) + roman(d - 10)
-    elif d > 5 and d < 9:
-        return roman(5) + roman(d - 5)
-
-    return dic.get(d, "I" * d)
 
 class TestRoman(unittest.TestCase):
     def test_zero_raises_value_error(self):
@@ -94,4 +88,13 @@ class TestRoman(unittest.TestCase):
 
     def test_fourty_two(self):
         self.assertEquals("XLII", roman(42))
+
+    def test_fifty(self):
+        self.assertEquals("L", roman(50))
+
+    def test_fifty_one(self):
+        self.assertEquals("LI", roman(51))
+
+    def test_one_hundred(self):
+        self.assertEquals("C", roman(100))
 
